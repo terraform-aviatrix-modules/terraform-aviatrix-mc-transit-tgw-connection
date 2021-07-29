@@ -1,21 +1,21 @@
 resource "aws_customer_gateway" "transit_gw" {
   bgp_asn    = var.aviatrix_asn
-  ip_address = var.gw.eip
+  ip_address = var.gw_object.eip
   type       = "ipsec.1"
 
   tags = {
-    Name = var.gw.gw_name
+    Name = var.gw_object.gw_name
   }
 }
 
 resource "aws_customer_gateway" "transit_ha_gw" {
   count      = local.is_ha ? 1 : 0
   bgp_asn    = var.aviatrix_asn
-  ip_address = var.gw.ha_eip
+  ip_address = var.gw_object.ha_eip
   type       = "ipsec.1"
 
   tags = {
-    Name = var.gw.ha_gw_name
+    Name = var.gw_object.ha_gw_name
   }
 }
 
@@ -54,9 +54,9 @@ resource "aws_vpn_connection" "transit_ha_gw" {
 
 resource "aviatrix_transit_external_device_conn" "single_transit_gw_to_tgw" {
   count             = local.is_ha ? 0 : 1
-  vpc_id            = var.gw.vpc_id
+  vpc_id            = var.gw_object.vpc_id
   connection_name   = "transit_to_tgw_a"
-  gw_name           = var.gw.gw_name
+  gw_name           = var.gw_object.gw_name
   connection_type   = "bgp"
   bgp_local_as_num  = var.aviatrix_asn
   bgp_remote_as_num = var.tgw_asn
@@ -74,9 +74,9 @@ resource "aviatrix_transit_external_device_conn" "single_transit_gw_to_tgw" {
 
 resource "aviatrix_transit_external_device_conn" "ha_tunnel1_to_tgw" {
   count              = local.is_ha ? 1 : 0
-  vpc_id             = var.gw.vpc_id
+  vpc_id             = var.gw_object.vpc_id
   connection_name    = "transit_to_tgw_a"
-  gw_name            = var.gw.gw_name
+  gw_name            = var.gw_object.gw_name
   connection_type    = "bgp"
   bgp_local_as_num   = var.aviatrix_asn
   bgp_remote_as_num  = var.tgw_asn
@@ -88,9 +88,9 @@ resource "aviatrix_transit_external_device_conn" "ha_tunnel1_to_tgw" {
 
 resource "aviatrix_transit_external_device_conn" "ha_tunnel2_to_tgw" {
   count              = local.is_ha ? 1 : 0
-  vpc_id             = var.gw.vpc_id
+  vpc_id             = var.gw_object.vpc_id
   connection_name    = "transit_to_tgw_b"
-  gw_name            = var.gw.gw_name
+  gw_name            = var.gw_object.gw_name
   connection_type    = "bgp"
   bgp_local_as_num   = var.aviatrix_asn
   bgp_remote_as_num  = var.tgw_asn
