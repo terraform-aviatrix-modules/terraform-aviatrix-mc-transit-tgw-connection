@@ -19,3 +19,7 @@ variable "aviatrix_asn" {
 variable "tgw_asn" {
   type = number
 }
+
+variable "tgw_id" {
+  type = string
+}

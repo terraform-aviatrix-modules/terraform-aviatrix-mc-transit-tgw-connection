@@ -30,7 +30,7 @@ resource "random_password" "psk_transit_1tunnel2" {
 
 resource "aws_vpn_connection" "transit1a" {
   customer_gateway_id = aws_customer_gateway.transit1a.id
-  transit_gateway_id  = aws_ec2_transit_gateway.tgw1.id
+  transit_gateway_id  = var.tgw_id
   type                = aws_customer_gateway.transit1a.type
 
   tunnel1_inside_cidr   = var.tunnel_cidrs[0]
@@ -41,7 +41,7 @@ resource "aws_vpn_connection" "transit1a" {
 
 resource "aws_vpn_connection" "transit1b" {
   customer_gateway_id = aws_customer_gateway.transit1b.id
-  transit_gateway_id  = aws_ec2_transit_gateway.tgw1.id
+  transit_gateway_id  = var.tgw_id
   type                = aws_customer_gateway.transit1b.type
 
   tunnel1_inside_cidr   = var.tunnel_cidrs[1]
