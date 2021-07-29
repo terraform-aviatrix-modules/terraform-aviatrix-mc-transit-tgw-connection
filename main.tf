@@ -58,8 +58,8 @@ resource "aviatrix_transit_external_device_conn" "transit1a_to_tgw" {
   bgp_local_as_num   = var.aviatrix_asn
   bgp_remote_as_num  = var.tgw_asn
   remote_gateway_ip  = "${aws_vpn_connection.transit1a.tunnel1_address},${aws_vpn_connection.transit1b.tunnel1_address}"
-  local_tunnel_cidr  = "${cidrhost(var.tunnel_cidrs[0], 2)}/30,${cidrhost(var.tunnel_cidrs[0], 2)}/30"
-  remote_tunnel_cidr = "${cidrhost(var.tunnel_cidrs[1], 1)}/30,${cidrhost(var.tunnel_cidrs[1], 1)}/30"
+  local_tunnel_cidr  = "${cidrhost(var.tunnel_cidrs[0], 2)}/30,${cidrhost(var.tunnel_cidrs[1], 2)}/30"
+  remote_tunnel_cidr = "${cidrhost(var.tunnel_cidrs[0], 1)}/30,${cidrhost(var.tunnel_cidrs[1], 1)}/30"
   pre_shared_key     = random_password.psk_transit_1tunnel1.result
 }
 
@@ -71,7 +71,7 @@ resource "aviatrix_transit_external_device_conn" "transit1b_to_tgw" {
   bgp_local_as_num   = var.aviatrix_asn
   bgp_remote_as_num  = var.tgw_asn
   remote_gateway_ip  = "${aws_vpn_connection.transit1a.tunnel2_address},${aws_vpn_connection.transit1b.tunnel2_address}"
-  local_tunnel_cidr  = "${cidrhost(var.tunnel_cidrs[2], 2)}/30,${cidrhost(var.tunnel_cidrs[2], 2)}/30"
-  remote_tunnel_cidr = "${cidrhost(var.tunnel_cidrs[3], 1)}/30,${cidrhost(var.tunnel_cidrs[3], 1)}/30"
+  local_tunnel_cidr  = "${cidrhost(var.tunnel_cidrs[2], 2)}/30,${cidrhost(var.tunnel_cidrs[3], 2)}/30"
+  remote_tunnel_cidr = "${cidrhost(var.tunnel_cidrs[2], 1)}/30,${cidrhost(var.tunnel_cidrs[3], 1)}/30"
   pre_shared_key     = random_password.psk_transit_1tunnel2.result
 }
