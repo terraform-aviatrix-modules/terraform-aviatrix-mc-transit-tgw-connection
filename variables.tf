@@ -25,5 +25,5 @@ variable "tgw_id" {
 }
 
 locals {
-  is_ha = length(var.gw_object.ha_gw_name) > 0 ? true : false
+  is_ha = length(try(var.gw_object.ha_gw_name, "")) > 0 ? true : false
 }
