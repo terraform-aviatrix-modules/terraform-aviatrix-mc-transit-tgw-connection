@@ -1,5 +1,5 @@
-variable "gw" {
-
+variable "gw_object" {
+  description = "Aviatrix Transit Gateway object with all of it's attributes."
 }
 
 variable "tunnel_cidrs" {
@@ -22,4 +22,8 @@ variable "tgw_asn" {
 
 variable "tgw_id" {
   type = string
+}
+
+locals {
+  is_ha = length(var.gw_object.ha_gw_name) > 0 ? true : false
 }
