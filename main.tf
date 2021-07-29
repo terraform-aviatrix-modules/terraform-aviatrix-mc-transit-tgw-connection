@@ -51,9 +51,9 @@ resource "aws_vpn_connection" "transit1b" {
 }
 
 resource "aviatrix_transit_external_device_conn" "transit1a_to_tgw" {
-  vpc_id             = module.transit_aws1.vpc.vpc_id
+  vpc_id             = var.gw.vpc_id
   connection_name    = "transit1_to_tgw_a"
-  gw_name            = module.transit_aws1.transit_gateway.gw_name
+  gw_name            = var.gw.gw_name
   connection_type    = "bgp"
   bgp_local_as_num   = var.aviatrix_asn
   bgp_remote_as_num  = var.tgw_asn
@@ -64,9 +64,9 @@ resource "aviatrix_transit_external_device_conn" "transit1a_to_tgw" {
 }
 
 resource "aviatrix_transit_external_device_conn" "transit1b_to_tgw" {
-  vpc_id             = module.transit_aws1.vpc.vpc_id
+  vpc_id             = var.gw.vpc_id
   connection_name    = "transit1_to_tgw_b"
-  gw_name            = module.transit_aws1.transit_gateway.gw_name
+  gw_name            = var.gw.gw_name
   connection_type    = "bgp"
   bgp_local_as_num   = var.aviatrix_asn
   bgp_remote_as_num  = var.tgw_asn
