@@ -50,7 +50,7 @@ resource "aws_vpn_connection" "transit_ha_gw" {
 
 resource "aviatrix_transit_external_device_conn" "tunnel1_to_tgw" {
   vpc_id             = var.gw_object.vpc_id
-  connection_name    = "transit_to_tgw_a"
+  connection_name    = "${local.connection_name}_a"
   gw_name            = var.gw_object.gw_name
   connection_type    = "bgp"
   bgp_local_as_num   = var.aviatrix_asn
@@ -63,7 +63,7 @@ resource "aviatrix_transit_external_device_conn" "tunnel1_to_tgw" {
 
 resource "aviatrix_transit_external_device_conn" "tunnel2_to_tgw" {
   vpc_id             = var.gw_object.vpc_id
-  connection_name    = "transit_to_tgw_b"
+  connection_name    = "${local.connection_name}_b"
   gw_name            = var.gw_object.gw_name
   connection_type    = "bgp"
   bgp_local_as_num   = var.aviatrix_asn

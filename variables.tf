@@ -24,6 +24,12 @@ variable "tgw_id" {
   type = string
 }
 
+variable "connection_name" {
+  type    = string
+  default = ""
+}
+
 locals {
-  is_ha = var.gw_object.ha_gw_name == null ? false : true
+  is_ha           = var.gw_object.ha_gw_name == null ? false : true
+  connection_name = length(var.connection_name) > 0 ? var.connectionname : "${var.gw_object.gw_name}_to_tgw"
 }
