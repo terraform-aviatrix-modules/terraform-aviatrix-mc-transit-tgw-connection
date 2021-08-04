@@ -23,7 +23,6 @@ module "vpn1" {
   tgw_asn      = data.aws_ec2_transit_gateway.tgw.amazon_side_asn
   tgw_id       = data.aws_ec2_transit_gateway.tgw.id
 }
-}
 ```
 
 ### Variables
