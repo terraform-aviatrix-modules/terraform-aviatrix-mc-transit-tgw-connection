@@ -40,7 +40,7 @@ The following variables are optional:
 
 key | default | value 
 :---|:---|:---
-tunnel_cidrs | ["169.254.101.0/30","169.254.102.0/30","169.254.103.0/30","169.254.104.0/30",] | A list of CIDR's to be used for the inner tunnel IP addresses
+tunnel_cidrs | ["169.254.101.0/30","169.254.102.0/30", "169.254.103.0/30","169.254.104.0/30",] | A list of CIDR's to be used for the inner tunnel IP addresses
 connection_name | ${var.gw_object.gw_name}_to_tgw | Name to use to create the S2C connections on the Aviatrix gateways
 
 ### Outputs
