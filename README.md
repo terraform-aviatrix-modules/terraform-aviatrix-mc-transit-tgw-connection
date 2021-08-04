@@ -4,8 +4,8 @@
 This module creates an IPSEC connection between a single or HA Aviatrix transit gateway and an AWS TGW.
 
 ### Diagram
-\<Provide a diagram of the high level constructs thet will be created by this module>
-<img src="<IMG URL>"  height="250">
+<img src="https://github.com/terraform-aviatrix-modules/terraform-aviatrix-mc-transit-tgw-connection/blob/master/img/terraform-aviatrix-mc-transit-tgw-connection.png?raw=true" heigh="400">
+
 
 ### Compatibility
 Module version | Terraform version | Controller version | Terraform provider version
