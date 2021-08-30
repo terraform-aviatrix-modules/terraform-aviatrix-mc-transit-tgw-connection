@@ -13,20 +13,34 @@ variable "tunnel_cidrs" {
 }
 
 variable "aviatrix_asn" {
-  type = number
+  description = "The ASN of the Aviatrix transit gateway"
+  type        = number
 }
 
 variable "tgw_asn" {
-  type = number
+  description = "The ASN configured on the TGW"
+  type        = number
 }
 
 variable "tgw_id" {
-  type = string
+  description = "The ID of the TGW"
+  type        = string
 }
 
 variable "connection_name" {
-  type    = string
-  default = ""
+  description = "Name to use to create the S2C connections on the Aviatrix gateways"
+  type        = string
+  default     = ""
+}
+
+variable "enable_learned_cidrs_approval" {
+  description = "Set to true to enable learned CIDR's approval"
+  default     = false
+}
+
+variable "approved_cidrs" {
+  description = "A list of approved CIDRs for when enable_learned_cidrs_approval is true."
+  default     = ""
 }
 
 locals {

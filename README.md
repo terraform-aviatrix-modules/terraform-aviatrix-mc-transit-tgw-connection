@@ -41,6 +41,8 @@ key | default | value
 :---|:---|:---
 tunnel_cidrs | ["169.254.101.0/30","169.254.102.0/30", "169.254.103.0/30","169.254.104.0/30",] | A list of CIDR's to be used for the inner tunnel IP addresses
 connection_name | ${var.gw_object.gw_name}_to_tgw | Name to use to create the S2C connections on the Aviatrix gateways
+enable_learned_cidrs_approval | false | Set to true to enable learned CIDR's approval
+approved_cidrs | "" | A list of approved CIDRs for when enable_learned_cidrs_approval is true. E.g. "10.0.0.0/8, 192.168.1.0/24"
 
 ### Outputs
 This module will return the following outputs:
