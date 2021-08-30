@@ -40,7 +40,7 @@ variable "enable_learned_cidrs_approval" {
 
 variable "approved_cidrs" {
   description = "A list of approved CIDRs for when enable_learned_cidrs_approval is true."
-  default     = []
+  default     = null
 }
 
 locals {
