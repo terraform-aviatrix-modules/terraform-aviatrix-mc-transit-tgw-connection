@@ -50,6 +50,5 @@ variable "is_ha" {
 }
 
 locals {
-  #is_ha           = length(var.gw_object.ha_gw_name) > 0 ? true : false
   connection_name = length(var.connection_name) > 0 ? var.connection_name : "${var.gw_object.gw_name}_to_tgw"
 }
