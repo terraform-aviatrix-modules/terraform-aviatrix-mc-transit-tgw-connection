@@ -9,7 +9,7 @@ resource "aws_customer_gateway" "transit_gw" {
 }
 
 resource "aws_customer_gateway" "transit_ha_gw" {
-  count      = local.is_ha ? 1 : 0
+  count      = var.is_ha ? 1 : 0
   bgp_asn    = var.aviatrix_asn
   ip_address = var.gw_object.ha_eip
   type       = "ipsec.1"
@@ -38,7 +38,7 @@ resource "aws_vpn_connection" "transit_gw" {
 }
 
 resource "aws_vpn_connection" "transit_ha_gw" {
-  count               = local.is_ha ? 1 : 0
+  count               = var.is_ha ? 1 : 0
   customer_gateway_id = aws_customer_gateway.transit_ha_gw[0].id
   transit_gateway_id  = var.tgw_id
   type                = aws_customer_gateway.transit_ha_gw[0].type
@@ -56,9 +56,9 @@ resource "aviatrix_transit_external_device_conn" "tunnel1_to_tgw" {
   connection_type               = "bgp"
   bgp_local_as_num              = var.aviatrix_asn
   bgp_remote_as_num             = var.tgw_asn
-  remote_gateway_ip             = local.is_ha ? "${aws_vpn_connection.transit_gw.tunnel1_address},${aws_vpn_connection.transit_ha_gw[0].tunnel1_address}" : aws_vpn_connection.transit_gw.tunnel1_address
-  local_tunnel_cidr             = local.is_ha ? "${cidrhost(var.tunnel_cidrs[0], 2)}/30,${cidrhost(var.tunnel_cidrs[2], 2)}/30" : "${cidrhost(var.tunnel_cidrs[0], 2)}/30"
-  remote_tunnel_cidr            = local.is_ha ? "${cidrhost(var.tunnel_cidrs[0], 1)}/30,${cidrhost(var.tunnel_cidrs[2], 1)}/30" : "${cidrhost(var.tunnel_cidrs[0], 1)}/30"
+  remote_gateway_ip             = var.is_ha ? "${aws_vpn_connection.transit_gw.tunnel1_address},${aws_vpn_connection.transit_ha_gw[0].tunnel1_address}" : aws_vpn_connection.transit_gw.tunnel1_address
+  local_tunnel_cidr             = var.is_ha ? "${cidrhost(var.tunnel_cidrs[0], 2)}/30,${cidrhost(var.tunnel_cidrs[2], 2)}/30" : "${cidrhost(var.tunnel_cidrs[0], 2)}/30"
+  remote_tunnel_cidr            = var.is_ha ? "${cidrhost(var.tunnel_cidrs[0], 1)}/30,${cidrhost(var.tunnel_cidrs[2], 1)}/30" : "${cidrhost(var.tunnel_cidrs[0], 1)}/30"
   pre_shared_key                = random_password.psk[0].result
   enable_learned_cidrs_approval = var.enable_learned_cidrs_approval
   approved_cidrs                = var.approved_cidrs
@@ -71,9 +71,9 @@ resource "aviatrix_transit_external_device_conn" "tunnel2_to_tgw" {
   connection_type               = "bgp"
   bgp_local_as_num              = var.aviatrix_asn
   bgp_remote_as_num             = var.tgw_asn
-  remote_gateway_ip             = local.is_ha ? "${aws_vpn_connection.transit_gw.tunnel2_address},${aws_vpn_connection.transit_ha_gw[0].tunnel2_address}" : aws_vpn_connection.transit_gw.tunnel2_address
-  local_tunnel_cidr             = local.is_ha ? "${cidrhost(var.tunnel_cidrs[1], 2)}/30,${cidrhost(var.tunnel_cidrs[3], 2)}/30" : "${cidrhost(var.tunnel_cidrs[1], 2)}/30"
-  remote_tunnel_cidr            = local.is_ha ? "${cidrhost(var.tunnel_cidrs[1], 1)}/30,${cidrhost(var.tunnel_cidrs[3], 1)}/30" : "${cidrhost(var.tunnel_cidrs[1], 1)}/30"
+  remote_gateway_ip             = var.is_ha ? "${aws_vpn_connection.transit_gw.tunnel2_address},${aws_vpn_connection.transit_ha_gw[0].tunnel2_address}" : aws_vpn_connection.transit_gw.tunnel2_address
+  local_tunnel_cidr             = var.is_ha ? "${cidrhost(var.tunnel_cidrs[1], 2)}/30,${cidrhost(var.tunnel_cidrs[3], 2)}/30" : "${cidrhost(var.tunnel_cidrs[1], 2)}/30"
+  remote_tunnel_cidr            = var.is_ha ? "${cidrhost(var.tunnel_cidrs[1], 1)}/30,${cidrhost(var.tunnel_cidrs[3], 1)}/30" : "${cidrhost(var.tunnel_cidrs[1], 1)}/30"
   pre_shared_key                = random_password.psk[1].result
   enable_learned_cidrs_approval = var.enable_learned_cidrs_approval
   approved_cidrs                = var.approved_cidrs

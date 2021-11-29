@@ -39,6 +39,7 @@ The following variables are optional:
 
 key | default | value 
 :---|:---|:---
+is_ha | true | Set to false if the Aviatrix Transit Gateway is not in HA
 tunnel_cidrs | ["169.254.101.0/30","169.254.102.0/30", "169.254.103.0/30","169.254.104.0/30",] | A list of CIDR's to be used for the inner tunnel IP addresses
 connection_name | ${var.gw_object.gw_name}_to_tgw | Name to use to create the S2C connections on the Aviatrix gateways
 enable_learned_cidrs_approval | false | Set to true to enable learned CIDR's approval. Aviatrix Gateway needs to be in "connection" approval mode.
