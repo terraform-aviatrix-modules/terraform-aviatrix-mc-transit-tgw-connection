@@ -23,7 +23,7 @@ resource "random_password" "psk" {
   count   = 2
   length  = 64
   special = false
-  number  = false #We need to make sure we don't need numbers, because of the edge case of the psk starting with 0. This is not supported in aws_vpn_connection
+  numeric = false #We need to make sure we don't need numbers, because of the edge case of the psk starting with 0. This is not supported in aws_vpn_connection
 }
 
 resource "aws_vpn_connection" "transit_gw" {
