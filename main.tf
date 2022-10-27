@@ -1,6 +1,6 @@
 resource "aws_customer_gateway" "transit_gw" {
   bgp_asn    = var.aviatrix_asn
-  ip_address = var.gw_object.eip
+  ip_address = var.gw_object.public_ip
   type       = "ipsec.1"
 
   tags = {
@@ -11,7 +11,7 @@ resource "aws_customer_gateway" "transit_gw" {
 resource "aws_customer_gateway" "transit_ha_gw" {
   count      = local.is_ha ? 1 : 0
   bgp_asn    = var.aviatrix_asn
-  ip_address = var.gw_object.ha_eip
+  ip_address = var.gw_object.ha_public_ip
   type       = "ipsec.1"
 
   tags = {
@@ -35,6 +35,7 @@ resource "aws_vpn_connection" "transit_gw" {
   tunnel2_inside_cidr   = var.tunnel_cidrs[1]
   tunnel1_preshared_key = random_password.psk[0].result
   tunnel2_preshared_key = random_password.psk[1].result
+  tags                  = { Name = "${var.aws_vpn_tunnel_name}" }
 }
 
 resource "aws_vpn_connection" "transit_ha_gw" {
@@ -47,6 +48,7 @@ resource "aws_vpn_connection" "transit_ha_gw" {
   tunnel2_inside_cidr   = var.tunnel_cidrs[3]
   tunnel1_preshared_key = random_password.psk[0].result
   tunnel2_preshared_key = random_password.psk[1].result
+  tags                  = { Name = "${var.aws_vpn_ha_tunnel_name}" }
 }
 
 resource "aviatrix_transit_external_device_conn" "tunnel1_to_tgw" {
